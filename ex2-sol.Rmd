@@ -1,0 +1,267 @@
+---
+title: "Exercise Week 2: Solutions"
+author: "ETC3550: 2021"
+output:
+  bookdown::html_document2:
+    fig_height: 5
+    toc: yes
+    toc_depth: 1
+    toc_float:
+      collapsed: false
+    number_sections: false
+    code_folding: show
+    theme: readable
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache=TRUE)
+```
+
+```{r, message = FALSE}
+library(fpp3)
+```
+
+
+# fpp3 2.10, Ex 1
+
+> Use the help function to explore what the series `gafa_stock`, `PBS`, `vic_elec` and `pelt` represent.
+>
+> a. Use `autoplot()` to plot some of the series in these data sets.
+> b. What is the time interval of each series?
+
+## gafa_stock
+
+```{r}
+gafa_stock %>%
+  autoplot(Close)
+```
+
+Stock prices for these technology stocks have risen for most of the series, until mid-late 2018.
+
+```{r}
+gafa_stock
+```
+
+Interval is daily. Looking closer at the data, we can see that the index is a Date variable. It also appears that observations occur only on trading days, creating lots of implicit missing values.
+
+## PBS
+
+There are too many series to plot. Let's focus on aggregate A10 expenditure.
+
+```{r}
+a10 <- PBS %>%
+  filter(ATC2 == "A10") %>%
+  summarise(Cost = sum(Cost))
+```
+
+```{r}
+a10 %>%
+  autoplot(Cost)
+```
+
+Appears to have upward trend (perhaps exponential), and seasonality which varies proportionately to the level of the series.
+
+```{r}
+a10
+```
+
+Observations are made once every month.
+
+## vic_elec
+
+```{r}
+vic_elec %>%
+  autoplot(Demand)
+```
+
+Appears to have an annual seasonal pattern, where demand is higher during summer and winter. Can't see much detail, so let's zoom in.
+
+```{r}
+vic_elec %>%
+  filter(yearmonth(Time) == yearmonth("2012 June")) %>%
+  autoplot(Demand)
+```
+
+Appears to have a daily pattern, where less electricity is used overnight. Also appears to have a working day effect (less demand on weekends and holidays).
+
+```{r}
+vic_elec
+```
+
+Data is available at 30 minute intervals.
+
+## pelt
+
+```{r}
+pelt %>% autoplot(Lynx)
+```
+
+Canadian lynx trappings appears to be cyclic, as the extent of peak trappings is unpredictable, and the spacing between the peaks is irregular.
+
+```{r}
+pelt %>% autoplot(Hare)
+```
+
+Similar can be said for snowshoe hare trappings, although this series appears more erratic.
+
+```{r}
+pelt %>%
+  pivot_longer(Hare:Lynx, names_to="Animal", values_to="Trappings") %>%
+  autoplot(Trappings)
+```
+
+Plotting both Lynx and Hare trappings, it appears that the peaks in Canadian Lynx trappings occur shortly after peaks in Snowshoe Hare trappings. This relationship is due to the Canadian Lynx being specialised hunters of the Snowshoe Hare, resulting in a strong predator-prey relationship.
+
+```{r}
+interval(pelt)
+```
+
+Observations are made once per year.
+
+# fpp3 2.10, Ex 2
+
+> Use `filter()` to find what days corresponded to the peak closing price for each of the four stocks in `gafa_stock`.
+
+```{r}
+gafa_stock %>%
+  group_by(Symbol) %>%
+  filter(Close == max(Close)) %>%
+  ungroup() %>%
+  select(Symbol, Date, Close)
+```
+
+# fpp3 2.10, Ex 3
+
+> Download the file `tute1.csv` from [the book website](http://OTexts.com/fpp3/extrafiles/tute1.csv), open it in Excel (or some other spreadsheet application), and review its contents. You should find four columns of information. Columns B through D each contain a quarterly series, labelled Sales, AdBudget and GDP. Sales contains the quarterly sales for a small company over the period 1981-2005. AdBudget is the advertising budget and GDP is the gross domestic product. All series have been adjusted for inflation.
+
+```{r}
+download.file("http://OTexts.com/fpp3/extrafiles/tute1.csv",
+              tute1 <- tempfile())
+tute1 <- readr::read_csv(tute1)
+View(tute1)
+mytimeseries <- tute1 %>%
+  mutate(Quarter = yearmonth(Quarter)) %>%
+  as_tsibble(index = Quarter)
+
+mytimeseries %>%
+  pivot_longer(-Quarter, names_to="Key", values_to="Value") %>%
+  ggplot(aes(x = Quarter, y = Value, colour = Key)) +
+    geom_line() +
+    facet_grid(vars(Key), scales = "free_y")
+
+# Without faceting:
+mytimeseries %>%
+  pivot_longer(-Quarter, names_to="Key", values_to="Value") %>%
+  ggplot(aes(x = Quarter, y = Value, colour = Key)) +
+    geom_line()
+```
+
+# fpp3 2.10, Ex 4
+
+> The `USgas` package contains data on the demand for natural gas in the US.
+
+>    a. Install the `USgas` package.
+>    b. Create a tsibble from `us_total` with year as the index and state as the key.
+>    c. Plot the annual natural gas consumption by state for the New England area (comprising the states of Maine, Vermont, New Hampshire, Massachusetts, Connecticut and Rhode Island).
+
+```{r}
+# install.packages("USgas")
+library(USgas)
+us_tsibble <- us_total %>%
+  as_tsibble(index=year, key=state)
+# For each state
+us_tsibble %>%
+  filter(state %in% c("Maine", "Vermont", "New Hampshire", "Massachusetts",
+                      "Connecticut", "Rhode Island")) %>%
+  autoplot(y/1e3) +
+  labs(y = "billion cubic feet")
+```
+
+# fpp3 2.10, Ex 5
+
+> a. Download `tourism.xlsx` from [the book website](http://OTexts.com/fpp3/extrafiles/tourism.xlsx) and read it into R using `read_excel()` from the `readxl` package.
+> b. Create a tsibble which is identical to the `tourism` tsibble from the `tsibble` package.
+> c. Find what combination of `Region` and `Purpose` had the maximum number of overnight trips on average.
+> d. Create a new tsibble which combines the Purposes and Regions, and just has total trips by State.
+
+```{r}
+download.file("http://OTexts.com/fpp3/extrafiles/tourism.xlsx",
+              tourism_file <- tempfile())
+my_tourism <- readxl::read_excel(tourism_file) %>%
+  mutate(Quarter = yearquarter(Quarter)) %>%
+  as_tsibble(
+    index = Quarter,
+    key = c(Region, State, Purpose)
+  )
+my_tourism
+tourism
+
+my_tourism %>%
+  as_tibble() %>%
+  group_by(Region, Purpose) %>%
+  summarise(Trips = mean(Trips)) %>%
+  ungroup() %>%
+  filter(Trips == max(Trips))
+
+state_tourism <- my_tourism %>%
+  group_by(State) %>%
+  summarise(Trips = sum(Trips)) %>%
+  ungroup()
+state_tourism
+```
+
+# fpp3 2.10, Ex 6
+
+> Create time plots of the following four time series: `Bricks` from `aus_production`, `Lynx` from `pelt`, `Close` from `gafa_stock`, `Demand` from `vic_elec`.
+>
+>    + Use `?` (or `help()`) to find out about the data in each series.
+>    + For the last plot, modify the axis labels and title.
+
+## Bricks
+
+```{r}
+aus_production %>% autoplot(Bricks)
+```
+
+An upward trend is apparent until 1980, after which the number of clay bricks being produced starts to decline. A seasonal pattern is evident in this data. Some sharp drops in some quarters can also be seen.
+
+## Lynx
+
+```{r}
+pelt %>% autoplot(Lynx)
+```
+
+Canadian lynx trappings are cyclic, as the spacing between the peaks is irregular but approximately 10 years.
+
+## Close
+
+```{r}
+gafa_stock %>% autoplot(Close)
+```
+
+The four stocks are on different scales, so they are not directly comparable. A plot with faceting would be better.
+
+```{r}
+gafa_stock %>%
+  ggplot(aes(x=Date, y=Close, group=Symbol)) +
+  geom_line(aes(col=Symbol)) +
+  facet_grid(Symbol ~ ., scales='free')
+```
+
+The downturn in the second half of 2018 is now very clear, with Facebook taking a big drop (about 20%) in the middle of the year.
+
+The stocks tend to move roughly together, as you would expect with companies in the same industry.
+
+## Demand
+
+```{r}
+vic_elec %>% autoplot(Demand/1e3) +
+  labs(
+    x = "Date",
+    y = "Demand (GW)",
+    title = "Half-hourly electricity demand",
+    subtitle = "Victoria, Australia"
+  )
+```
+
+Here the annual seasonality is clear, with high volatility in summer, and peaks in summer and winter. The weekly seasonality is also visible, but the daily seasonality is hidden due to the compression on the horizontal axis.

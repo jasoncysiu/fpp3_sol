@@ -1,0 +1,739 @@
+\documentclass[
+]{article}
+
+%% recommended packages
+\usepackage{orcidlink,thumbpdf,lmodern}
+
+\usepackage[utf8]{inputenc}
+
+\author{
+\\
+}
+\title{}
+
+\Plainauthor{}
+
+
+\Abstract{
+
+}
+
+
+%% publication information
+%% \Volume{50}
+%% \Issue{9}
+%% \Month{June}
+%% \Year{2012}
+%% \Submitdate{}
+%% \Acceptdate{2012-06-04}
+
+\Address{
+  }
+
+% Pandoc syntax highlighting
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+
+% tightlist command for lists without linebreak
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% From pandoc table feature
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+
+
+
+
+
+\begin{document}
+
+
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> library(fpp3)
+\end{CodeInput}
+\end{CodeChunk}
+
+\hypertarget{fpp3-2.10-ex-7}{%
+\section{fpp3 2.10, Ex 7}\label{fpp3-2.10-ex-7}}
+
+\begin{quote}
+The \texttt{aus\_arrivals} data set comprises quarterly international arrivals (in thousands) to Australia from Japan, New Zealand, UK and the US. Use \texttt{autoplot()}, \texttt{gg\_season()} and \texttt{gg\_subseries()} to compare the differences between the arrivals from these four countries. Can you identify any unusual observations?
+\end{quote}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> aus_arrivals %>% autoplot(Arrivals)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-2-1} \end{center}
+
+\end{CodeChunk}
+
+Generally the number of arrivals to Australia is increasing over the entire series, with the exception of Japanese visitors which begin to decline after 1995. The series appear to have a seasonal pattern which varies proportionately to the number of arrivals. Interestingly, the number of visitors from NZ peaks sharply in 1988. The seasonal pattern from Japan appears to change substantially.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> aus_arrivals %>% gg_season(Arrivals, labels = "both")
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-3-1} \end{center}
+
+\end{CodeChunk}
+
+The seasonal pattern of arrivals appears to vary between each country. In particular, arrivals from the UK appears to be lowest in Q2 and Q3, and increase substantially for Q4 and Q1. Whereas for NZ visitors, the lowest period of arrivals is in Q1, and highest in Q3. Similar variations can be seen for Japan and US.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> aus_arrivals %>% gg_subseries(Arrivals)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-4-1} \end{center}
+
+\end{CodeChunk}
+
+The subseries plot reveals more interesting features. It is evident that whilst the UK arrivals is increasing, most of this increase is seasonal. More arrivals are coming during Q1 and Q4, whilst the increase in Q2 and Q3 is less extreme. The growth in arrivals from NZ and US appears fairly similar across all quarters. There exists an unusual spike in arrivals from the US in 1992 Q3.
+
+Unusual observations:
+
+\begin{itemize}
+\tightlist
+\item
+  2000 Q3: Spikes from the US (Sydney Olympics arrivals)
+\item
+  2001 Q3-Q4 are unusual for US (9/11 effect)
+\item
+  1991 Q3 is unusual for the US (Gulf war effect?)
+\end{itemize}
+
+\hypertarget{fpp3-2.10-ex-8}{%
+\section{fpp3 2.10, Ex 8}\label{fpp3-2.10-ex-8}}
+
+\begin{quote}
+Monthly Australian retail data is provided in aus\_retail. Select one of the time series as follows (but choose your own seed value):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{12345678}\NormalTok{)}
+\NormalTok{myseries }\OtherTok{\textless{}{-}}\NormalTok{ aus\_retail }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Series ID}\StringTok{\textasciigrave{}} \SpecialCharTok{==} \FunctionTok{sample}\NormalTok{(aus\_retail}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Series ID}\StringTok{\textasciigrave{}}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Explore your chosen retail time series using the following functions:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{autoplot}\NormalTok{(), }\FunctionTok{gg\_season}\NormalTok{(), }\FunctionTok{gg\_subseries}\NormalTok{(), }\FunctionTok{gg\_lag}\NormalTok{(), }\FunctionTok{ACF}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{autoplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+\end{quote}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> set.seed(12345678)
+R> myseries <- aus_retail %>%
++   filter(`Series ID` == sample(aus_retail$`Series ID`,1))
+R> myseries %>%
++   autoplot(Turnover) +
++   labs(y = "Turnover (million $AUD)", x = "Time (Years)",
++        title = myseries$Industry[1],
++        subtitle = myseries$State[1])
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/ex6-1} \end{center}
+
+\end{CodeChunk}
+
+The data features a non-linear upward trend and a strong seasonal pattern. The variability in the data appears proportional to the amount of turnover (level of the series) over the time period.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> myseries %>%
++   gg_season(Turnover, labels = "both") +
++   labs(y = "Turnover (million $AUD)",
++        title = myseries$Industry[1],
++        subtitle = myseries$State[1])
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-5-1} \end{center}
+
+\end{CodeChunk}
+
+Strong seasonality is evident in the season plot. Large increases in clothing retailing can be observed in December (probably a Christmas effect). There is also a peak in July that appears to be getting stronger over time. 2016 had an unusual pattern in the first half of the year.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> myseries %>%
++   gg_subseries(Turnover) +
++   labs(y = "Turnover (million $AUD)", x="")
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-6-1} \end{center}
+
+\end{CodeChunk}
+
+There is a strong trend in all months, with the largest trend in December and a larger increase in July and August than most other months.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> myseries %>%
++   gg_lag(Turnover, lags=1:24, geom='point') + facet_wrap(~ .lag, ncol=6)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-7-1} \end{center}
+
+\begin{CodeInput}
+R> myseries %>%
++   ACF(Turnover, lag_max = 50) %>%
++   autoplot()
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-7-2} \end{center}
+
+\end{CodeChunk}
+
+\hypertarget{fpp3-2.10-ex-9}{%
+\section{fpp3 2.10, Ex 9}\label{fpp3-2.10-ex-9}}
+
+\begin{quote}
+Use the following graphics functions: \texttt{autoplot()}, \texttt{gg\_season()}, \texttt{gg\_subseries()}, \texttt{gg\_lag()}, \texttt{ACF()} and explore features from the following time series: ``Total Private'' \texttt{Employed} from \texttt{us\_employment}, \texttt{Bricks} from \texttt{aus\_production}, \texttt{Hare} from \texttt{pelt}, ``H02'' \texttt{Cost} from \texttt{PBS}, and \texttt{us\_gasoline}.
+
+\begin{itemize}
+\tightlist
+\item
+  Can you spot any seasonality, cyclicity and trend?
+\item
+  What do you learn about the series?
+\item
+  What can you say about the seasonal patterns?
+\item
+  Can you identify any unusual years?
+\end{itemize}
+\end{quote}
+
+\hypertarget{total-private-employment-in-the-us}{%
+\subsection{Total Private Employment in the US}\label{total-private-employment-in-the-us}}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> us_employment %>%
++   filter(Title == "Total Private") %>%
++   autoplot(Employed)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-8-1} \end{center}
+
+\end{CodeChunk}
+
+There is a strong trend and seasonality. Some cyclic behaviour is seen, with a big drop due to the global financial crisis.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> us_employment %>%
++   filter(Title == "Total Private") %>%
++   gg_season(Employed)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-9-1} \end{center}
+
+\end{CodeChunk}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> us_employment %>%
++   filter(Title == "Total Private") %>%
++   gg_subseries(Employed)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-10-1} \end{center}
+
+\end{CodeChunk}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> us_employment %>%
++   filter(Title == "Total Private") %>%
++   gg_lag(Employed)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-11-1} \end{center}
+
+\end{CodeChunk}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> us_employment %>%
++   filter(Title == "Total Private") %>%
++   ACF(Employed) %>%
++   autoplot()
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-12-1} \end{center}
+
+\end{CodeChunk}
+
+In all of these plots, the trend is so dominant that it is hard to see anything else. We need to remove the trend so we can explore the other features of the data.
+
+\hypertarget{brick-production-in-australia}{%
+\subsection{Brick production in Australia}\label{brick-production-in-australia}}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> aus_production %>%
++   autoplot(Bricks)
+\end{CodeInput}
+\begin{CodeOutput}
+Warning: Removed 20 row(s) containing missing values (geom_path).
+\end{CodeOutput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-13-1} \end{center}
+
+\end{CodeChunk}
+
+A positive trend in the first 20 years, and a negative trend in the next 25 years. Strong quarterly seasonality, with some cyclicity -- note the recessions in the 1970s and 1980s.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> aus_production %>%
++   gg_season(Bricks)
+\end{CodeInput}
+\begin{CodeOutput}
+Warning: Removed 20 row(s) containing missing values (geom_path).
+\end{CodeOutput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-14-1} \end{center}
+
+\end{CodeChunk}
+
+Brick production tends to be lowest in the first quarter and peak in either quarter 2 or quarter 3.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> aus_production %>%
++   gg_subseries(Bricks)
+\end{CodeInput}
+\begin{CodeOutput}
+Warning: Removed 5 row(s) containing missing values (geom_path).
+\end{CodeOutput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-15-1} \end{center}
+
+\end{CodeChunk}
+
+The decrease in the last 25 years has been weakest in Q1.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> aus_production %>%
++   gg_lag(Bricks, geom='point')
+\end{CodeInput}
+\begin{CodeOutput}
+Warning: Removed 20 rows containing missing values (gg_lag).
+\end{CodeOutput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-16-1} \end{center}
+
+\begin{CodeInput}
+R> aus_production %>%
++   ACF(Bricks) %>% autoplot()
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-16-2} \end{center}
+
+\end{CodeChunk}
+
+The seasonality shows up as peaks at lags 4, 8, 12, 16, 20, \ldots. The trend is seen with the slow decline on the positive side.
+
+\hypertarget{snow-hare-trappings-in-canada}{%
+\subsection{Snow hare trappings in Canada}\label{snow-hare-trappings-in-canada}}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> pelt %>%
++   autoplot(Hare)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-17-1} \end{center}
+
+\end{CodeChunk}
+
+There is some cyclic behaviour with substantial variation in the length of the period.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> pelt %>%
++   gg_lag(Hare, geom='point')
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-18-1} \end{center}
+
+\begin{CodeInput}
+R> pelt %>%
++   ACF(Hare) %>% autoplot()
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-18-2} \end{center}
+
+\end{CodeChunk}
+
+The cyclic period seems to have an average of about 10 (due to the local maximum in ACF at lag 10).
+
+\hypertarget{h02-sales-in-australia}{%
+\subsection{H02 sales in Australia}\label{h02-sales-in-australia}}
+
+There are four series corresponding to H02 sales, so we will add them together.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> h02 <- PBS %>%
++   filter(ATC2 == "H02") %>%
++   group_by(ATC2) %>%
++   summarise(Cost = sum(Cost)) %>%
++   ungroup()
+\end{CodeInput}
+\end{CodeChunk}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> h02 %>%
++   autoplot(Cost)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-20-1} \end{center}
+
+\end{CodeChunk}
+
+A positive trend with strong monthly seasonality, dropping suddenly every February.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> h02 %>%
++   gg_season(Cost)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-21-1} \end{center}
+
+\end{CodeChunk}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> h02 %>%
++   gg_subseries(Cost)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-22-1} \end{center}
+
+\end{CodeChunk}
+
+The trends have been greater in the higher peaking months -- this leads to increasing seasonal variation.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> h02 %>%
++   gg_lag(Cost, geom='point', lags=1:16)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-23-1} \end{center}
+
+\begin{CodeInput}
+R> h02 %>%
++   ACF(Cost) %>% autoplot()
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-23-2} \end{center}
+
+\end{CodeChunk}
+
+The large January sales show up as a separate cluster of points in the lag plots. The strong seasonality is clear in the ACF plot.
+
+\hypertarget{us-gasoline-sales}{%
+\subsection{US gasoline sales}\label{us-gasoline-sales}}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> us_gasoline %>%
++   autoplot(Barrels)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-24-1} \end{center}
+
+\end{CodeChunk}
+
+A positive trend until 2008, and then the global financial crisis led to a drop in sales until 2012. The shape of the seasonality seems to have changed over time.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> us_gasoline %>%
++   gg_season(Barrels)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-25-1} \end{center}
+
+\end{CodeChunk}
+
+There is a lot of noise making it hard to see the overall seasonal pattern. However, it seems to drop towards the end of quarter 4.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> us_gasoline %>%
++   gg_subseries(Barrels)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-26-1} \end{center}
+
+\end{CodeChunk}
+
+The blue lines are helpful in seeing the average seasonal pattern.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> us_gasoline %>%
++   gg_lag(Barrels, geom='point', lags=1:16)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-27-1} \end{center}
+
+\begin{CodeInput}
+R> us_gasoline %>%
++   ACF(Barrels, lag_max = 150) %>% autoplot()
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-27-2} \end{center}
+
+\end{CodeChunk}
+
+The seasonality is seen if we increase the lags to at least 2 years (approx 104 weeks)
+
+\hypertarget{fpp3-2.10-ex-10}{%
+\section{fpp3 2.10, Ex 10}\label{fpp3-2.10-ex-10}}
+
+\begin{quote}
+The following time plots and ACF plots correspond to four different time series. Your task is to match each time plot in the first row with one of the ACF plots in the second row.
+\end{quote}
+
+\begin{CodeChunk}
+
+
+\begin{center}\includegraphics[width=1.35\linewidth]{ex3-sol_files/figure-latex/acfguess-1} \end{center}
+
+\end{CodeChunk}
+
+1-B, 2-A, 3-D, 4-C
+
+\hypertarget{fpp3-2.10-ex-11}{%
+\section{fpp3 2.10, Ex 11}\label{fpp3-2.10-ex-11}}
+
+\begin{quote}
+The \texttt{aus\_livestock} data contains the monthly total number of pigs slaughtered in Victoria, Australia, from Jul 1972 to Dec 2018. Use \texttt{filter()} to extract pig slaughters in Victoria between 1990 and 1995. Use \texttt{autoplot} and \texttt{ACF} for this data. How do they differ from white noise? If a longer period of data is used, what difference does it make to the ACF?
+\end{quote}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> vic_pigs <- aus_livestock %>%
++   filter(Animal == "Pigs", State == "Victoria", between(year(Month), 1990, 1995))
+R> vic_pigs
+\end{CodeInput}
+\begin{CodeOutput}
+# A tsibble: 72 x 4 [1M]
+# Key:       Animal, State [1]
+      Month Animal State    Count
+      <mth> <fct>  <fct>    <dbl>
+ 1 1990 Jan Pigs   Victoria 76000
+ 2 1990 Feb Pigs   Victoria 78100
+ 3 1990 Mar Pigs   Victoria 77600
+ 4 1990 Apr Pigs   Victoria 84100
+ 5 1990 May Pigs   Victoria 98000
+ 6 1990 Jun Pigs   Victoria 89100
+ 7 1990 Jul Pigs   Victoria 93500
+ 8 1990 Aug Pigs   Victoria 84700
+ 9 1990 Sep Pigs   Victoria 74500
+10 1990 Oct Pigs   Victoria 91900
+# ... with 62 more rows
+\end{CodeOutput}
+\end{CodeChunk}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> vic_pigs %>%
++   autoplot(Count)
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-29-1} \end{center}
+
+\end{CodeChunk}
+
+Although the values appear to vary erratically between months, a general upward trend is evident between 1990 and 1995. In contrast, a white noise plot does not exhibit any trend.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> vic_pigs %>% ACF(Count) %>% autoplot()
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-30-1} \end{center}
+
+\end{CodeChunk}
+
+The first 14 lags are significant, as the ACF slowly decays. This suggests that the data contains a trend. A white noise ACF plot would not usually contain any significant lags. The large spike at lag 12 suggests there is some seasonality in the data.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> aus_livestock %>%
++   filter(Animal == "Pigs", State == "Victoria") %>%
++   ACF(Count) %>%
++   autoplot()
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-31-1} \end{center}
+
+\end{CodeChunk}
+
+The longer series has much larger autocorrelations, plus clear evidence of seasonality at the seasonal lags of \(12, 24, \dots\).
+
+\hypertarget{fpp3-2.10-ex-12}{%
+\section{fpp3 2.10, Ex 12}\label{fpp3-2.10-ex-12}}
+
+\begin{quote}
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Use the following code to compute the daily changes in Google closing stock prices.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dgoog }\OtherTok{\textless{}{-}}\NormalTok{ gafa\_stock }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Symbol }\SpecialCharTok{==} \StringTok{"GOOG"}\NormalTok{, }\FunctionTok{year}\NormalTok{(Date) }\SpecialCharTok{\textgreater{}=} \DecValTok{2018}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{trading\_day =} \FunctionTok{row\_number}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{update\_tsibble}\NormalTok{(}\AttributeTok{index =}\NormalTok{ trading\_day, }\AttributeTok{regular =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{diff =} \FunctionTok{difference}\NormalTok{(Close))}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Why was it necessary to re-index the tsibble?
+\item
+  Plot these differences and their ACF.
+\item
+  Do the changes in the stock prices look like white noise?
+\end{enumerate}
+\end{quote}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> dgoog <- gafa_stock %>%
++   filter(Symbol == "GOOG", year(Date) >= 2018) %>%
++   mutate(trading_day = row_number()) %>%
++   update_tsibble(index = trading_day, regular = TRUE) %>%
++   mutate(diff = difference(Close))
+\end{CodeInput}
+\end{CodeChunk}
+
+The tsibble needed re-indexing as trading happens irregularly. The new index is based only on trading days.
+
+\begin{CodeChunk}
+\begin{CodeInput}
+R> dgoog %>% autoplot(diff)
+\end{CodeInput}
+\begin{CodeOutput}
+Warning: Removed 1 row(s) containing missing values (geom_path).
+\end{CodeOutput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-33-1} \end{center}
+
+\begin{CodeInput}
+R> dgoog %>% ACF(diff, lag_max=100) %>% autoplot()
+\end{CodeInput}
+
+
+\begin{center}\includegraphics{ex3-sol_files/figure-latex/unnamed-chunk-33-2} \end{center}
+
+\end{CodeChunk}
+
+There are some small significant autocorrelations out to lag 24, but nothing after that. Given the probability of a false positive is 5\%, these look similar to white noise.
+
+
+
+
+\end{document}
